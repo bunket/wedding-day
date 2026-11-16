@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wedding day · Айгерім мен Бекарыс</title>
+<meta name="description" content="Тойға шақырту. 3 қаңтар, Assyl Grant мейрамханасы, Ақтау.">
+<meta name="theme-color" content="#152419">
+<meta property="og:title" content="Wedding day · 3 қаңтар">
+<meta property="og:description" content="Ақ дастарханымыздың қадірлі қонағы болуға шақырамыз.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bad+Script&family=Cormorant+Unicase:wght@400;500&family=EB+Garamond:ital,wght@0,400;1,400&family=Golos+Text:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ═════════ 1 · ЖАБАДЫ ═════════ -->
+<header class="hero" id="hero">
+  <div class="hero__photo" aria-hidden="true"></div>
+  <div class="hero__veil" aria-hidden="true"></div>
+  <div class="hero__text">
+    <h1 class="hero__names">
+      <span class="hero__name" id="nameA">Бекарыс</span>
+      <span class="hero__amp" aria-hidden="true">&amp;</span>
+      <span class="hero__name" id="nameB">Айгерім</span>
+    </h1>
+    <p class="hero__tag" id="heroTag">Wedding day</p>
+  </div>
+</header>
+
+<!-- ═════════ бөлгіш ═════════ -->
+<div class="split">
+  <div class="split__paper"></div>
+  <img class="split__flowers split__flowers--right" src="assets/flowers-cutout.png" alt="">
+</div>
+
+<main>
+
+  <!-- ═════════ 2 · ШАҚЫРТУ ═════════ -->
+  <section class="blk blk--green" id="invite">
+    <div class="wrap">
+      <p class="call">Құрметті қонақтар!</p>
+      <p class="body">
+        Шаңырағымызға қонған қуанышты бөлісу үшін ақ дастарханымызды жайдық.
+        Сіздерді <span id="inviteDate">3 қаңтарда</span> өтетін тойымызға
+        ардақты қонақ болуға шақырамыз.
+      </p>
+      <p class="body body--small">Бізден сұратарымыз — көңілді келу, той бастауын
+        бірге ашу және кештің соңына дейін қасымызда болу.</p>
+    </div>
+  </section>
+
+  <!-- ═════════ 3 · КҮН ТАҚТЫМШАСЫ ═════════ -->
+  <section class="blk blk--green blk--tight" id="when">
+    <div class="wrap wrap--slim">
+      <p class="date-script" id="bigDate">3 қаңтар 2027</p>
+
+      <div class="cal" role="group" aria-label="Той күні бар ай">
+        <div class="cal__head" id="calHead"></div>
+        <div class="cal__grid" id="calGrid"></div>
+      </div>
+
+      <p class="time-script" id="bigTime">Сағат 06:00</p>
+    </div>
+  </section>
+
+  <!-- ═════════ 4 · МЕЙРАМХАНА ═════════ -->
+  <section class="blk blk--green blk--art">
+    <div class="etch-frame">
+      <img class="etch" src="assets/hall.jpg" alt="Assyl Grant мейрамханасының сызба суреті">
+    </div>
+  </section>
+
+  <!-- ═════════ 5 · МЕКЕН-ЖАЙ ═════════ -->
+  <section class="blk blk--green" id="where">
+    <div class="wrap wrap--slim">
+      <p class="h-script">Мекен-жай</p>
+      <p class="h-sub">Той орны</p>
+      <p class="addr" id="addrCity">Ақтау қаласы</p>
+      <p class="addr addr--line" id="addrLine">24-квартал, 43/4</p>
+      <p class="addr addr--venue" id="addrVenue">«Assyl Grant»</p>
+      <a class="pill" id="mapBtn" href="#" target="_blank" rel="noopener">
+        <img class="pill__logo" src="assets/2gis-icon-logo.jpg" alt="" aria-hidden="true">
+        <span>Картадан ашу</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═════════ бөлгіш ═════════ -->
+  <div class="split split--flip">
+    <div class="split__paper"></div>
+    <img class="split__flowers split__flowers--left" src="assets/flowers-cutout.png" alt="">
+  </div>
+
+  <!-- ═════════ 6 · ТОЙ ИЕЛЕРІ ═════════ -->
+  <section class="blk blk--meadow" id="hosts">
+    <div class="wrap wrap--slim">
+      <p class="h-script h-script--light">Той иелері: <span id="hostsNote"></span></p>
+      <div class="hosts__pairs" id="hostsPairs"></div>
+    </div>
+  </section>
+
+  <!-- ═════════ 7 · КЕРІ САНАЛУ ═════════ -->
+  <section class="blk blk--meadow blk--tight" id="countdown">
+    <div class="wrap wrap--slim">
+      <p class="h-script h-script--light h-script--sm">Тойға дейін:</p>
+      <div class="cd" id="cd" role="timer">
+        <div class="cd__u"><b id="cdD">00</b><span>күн</span></div>
+        <div class="cd__u"><b id="cdH">00</b><span>сағат</span></div>
+        <div class="cd__u"><b id="cdM">00</b><span>минут</span></div>
+        <div class="cd__u"><b id="cdS">00</b><span>секунд</span></div>
+      </div>
+      <p class="ask">Тойға келетініңізді растауды сұраймыз!</p>
+    </div>
+  </section>
+
+  <!-- ═════════ 8 · АНКЕТА ═════════ -->
+  <section class="blk blk--anketa" id="anketa">
+    <div class="wrap wrap--slim">
+      <p class="h-script">Анкета</p>
+
+      <form class="ask-form" id="form" novalidate>
+        <label class="lbl" for="qName">Аты-жөніңіз</label>
+        <input class="round" id="qName" name="name" type="text" autocomplete="name" placeholder="Аты-жөніңіз" required>
+
+        <p class="lbl lbl--block">Келесіз бе?</p>
+        <div class="opts" role="radiogroup" aria-label="Келесіз бе?">
+          <label class="opt"><input type="radio" name="come" value="yes" checked><i></i><span>Иә, әрине</span></label>
+          <label class="opt"><input type="radio" name="come" value="pair"><i></i><span>Жұбайыммен келемін</span></label>
+          <label class="opt"><input type="radio" name="come" value="family"><i></i><span>Отбасымен келемін</span></label>
+          <label class="opt"><input type="radio" name="come" value="no"><i></i><span>Келе алмаймын</span></label>
+        </div>
+
+        <button class="send" type="submit">Жіберу</button>
+        <p class="form-msg" id="msg" role="status" aria-live="polite"></p>
+
+        <div class="copybox" id="copybox" hidden>
+          <textarea id="copyText" rows="6" readonly aria-label="Көшіруге дайын хабарлама"></textarea>
+          <p class="copybox__hint">Мәтінді көшіріп, той иелеріне жіберіңіз.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ═════════ 9 · ТІЛЕКТЕР ═════════ -->
+  <section class="blk blk--cream" id="wishes">
+    <div class="wrap wrap--slim">
+      <p class="h-script h-script--dark">Тілектер</p>
+      <p class="body body--dark">Жас жұбайларға баталы сөзіңізді қалдырыңыз.</p>
+      <button class="pill pill--dark" id="wishBtn" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3z"/><path d="m3 7 9 6 9-6"/></svg>
+        <span>Тілек қалдыру</span>
+      </button>
+
+      <form class="wish-form" id="wishForm" hidden>
+        <input class="round round--dark" id="wWho" type="text" placeholder="Аты-жөніңіз" autocomplete="name">
+        <textarea class="round round--dark round--area" id="wText" rows="3" placeholder="Тілегіңіз…"></textarea>
+        <button class="send send--dark" type="submit">Жіберу</button>
+      </form>
+
+      <ul class="wish-list" id="wishList"></ul>
+    </div>
+  </section>
+
+  <!-- ═════════ бөлгіш ═════════ -->
+  <div class="split split--top">
+    <div class="split__paper split__paper--dark"></div>
+    <img class="split__flowers split__flowers--right" src="assets/flowers-cutout.png" alt="">
+  </div>
+
+  <footer class="foot">
+    <p class="foot__names" id="footNames">Бекарыс &amp; Айгерім</p>
+    <p class="foot__date" id="footDate">03 · 01 · 2027</p>
+    <p class="foot__credit">жеке шақырту беті</p>
+  </footer>
+</main>
+
+<!-- ═════════ МУЗЫКА ═════════ -->
+<button class="play" id="playBtn" type="button" aria-pressed="false">
+  <svg class="play__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+  <span class="sr">Музыканы қосу/өшіру</span>
+</button>
+<audio id="bgm" loop preload="none" src="assets/music.mp3"></audio>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
