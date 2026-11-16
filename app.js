@@ -36,9 +36,11 @@ const CONFIG = {
     query: "Assyl Grant, 24-й квартал 43/4, Актау",
   },
 
-  /* ─── Жауап қабылдайтын нөмір ───
-     7XXXXXXXXXX форматы. Бос болса — мәтін көшірілетін өріс ашылады. */
-  whatsapp: "",
+  /* ─── Telegram ───
+     ЕСКЕРТУ: токен осы файлда ашық жатыр — беттің кодын ашқан адам
+     көреді. Жасыру үшін прокси сервер керек.
+     chats: [1-адам, 2-адам] chat_id-лері. Бос болса — мәтін көшіріледі. */
+  telegram: { token: "9013685554:AAGGdUn-TVWKg8PIEGyxSATiDGUVdih92Ik", chats: ["6715191374", "6715191374"] },
 
   /* ─── Сөздік ─── */
   words: {
@@ -48,7 +50,9 @@ const CONFIG = {
     answers: { yes: "Иә, әрине", pair: "Жұбайыммен келемін",
                family: "Отбасымен келемін", no: "Келе алмаймын" },
     needName: "Аты-жөніңізді жазыңыз.",
-    saved:   "Рақмет! Жауабыңыз сақталды.",
+    saved:   "Рақмет! Жауабыңыз жіберілді.",
+    sending: "Жіберіліп тұр…",
+    sendFail:"Жіберу мүмкін болмады — мәтінді көшіріп жіберіңіз.",
     copied:  "Хабарлама буферге көшірілді.",
     noWish:  "Алдымен тілегіңізді жазыңыз.",
     wishOk:  "Тілегіңіз қосылды. Рақмет!",
@@ -144,6 +148,55 @@ const save  = (k, v) => { try { localStorage.setItem("iles." + k, JSON.stringify
 const esc   = s => String(s).replace(/[&<>"']/g, c =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
+/* ═════════ Telegram-ға тікелей ═════════ */
+const TG_API = "https://api.telegram.org/bot";
+const tgEsc  = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const tgCut  = (s, n) => String(s).replace(/\s+/g, " ").trim().slice(0, n);
+
+function tgText (p) {
+  const when = new Date().toLocaleString("ru-RU", { timeZone: "Asia/Aqtau" });
+
+  if (p.type === "anketa") {
+    return `🎉 <b>Анкета жауабы</b>\n\n` +
+      `Аты-жөні: <b>${tgEsc(tgCut(p.name, 120))}</b>\n` +
+      `Жауабы: ${tgEsc(W.answers[p.come] || p.come)}\n` +
+      `Уақыты: ${tgEsc(when)}`;
+  }
+  if (p.type === "wish") {
+    return `💐 <b>Жаңа тілек</b>\n\n` +
+      `Аты-жөні: <b>${tgEsc(tgCut(p.name || "Аноним", 120))}</b>\n` +
+      `Тілегі: ${tgEsc(String(p.text).trim().slice(0, 600))}\n\n` +
+      `Уақыты: ${tgEsc(when)}`;
+  }
+  return "";
+}
+
+const tgOn = () => !!CONFIG.telegram.token && (CONFIG.telegram.chats || []).filter(Boolean).length > 0;
+
+async function sendToBot (payload) {
+  const { token } = CONFIG.telegram;
+  const chats = (CONFIG.telegram.chats || []).filter(Boolean);
+  if (!tgOn()) return false;
+
+  /* spam-тор жасырын өрісті толтырса — ештеңе жібермейміз, бірақ
+     «сәтті» деп көрсетеміз, сонда олар тексерісті білмейді */
+  if (payload.website) return true;
+
+  const text = tgText(payload);
+  if (!text) return false;
+
+  /* form-urlencoded — Telegram-дың CORS-ы JSON preflight-ке 501 береді,
+     ал осы түрі тікелей өтеді */
+  const res = await Promise.all(chats.map(chat_id => {
+    const p = new URLSearchParams({
+      chat_id, text, parse_mode: "HTML", disable_web_page_preview: "true",
+    });
+    return fetch(`${TG_API}${token}/sendMessage`, { method: "POST", body: p })
+      .then(r => r.json()).catch(() => ({}));
+  }));
+  return res.some(j => j && j.ok);
+}
+
 /* ═════════ Анкета ═════════ */
 function wireForm () {
   const saved = read("anketa");
@@ -170,11 +223,18 @@ function wireForm () {
       `Аты-жөні: ${data.name}\n` +
       `Жауабы: ${W.answers[data.come]}\n`;
 
-    if (CONFIG.whatsapp) {
-      window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
-      msg.textContent = W.saved;
-      return;
-    }
+    const btn = $("#form .send");
+    btn.disabled = true;
+    msg.textContent = W.sending;
+
+    const ok = await sendToBot({
+      type: "anketa", name: data.name, come: data.come,
+      website: $("#qWebsite").value,
+    });
+    btn.disabled = false;
+
+    if (ok) { msg.textContent = W.saved; return; }
+    if (tgOn()) toast(W.sendFail);
 
     try {
       await navigator.clipboard.writeText(text);
@@ -206,19 +266,25 @@ function wireWishes () {
     $("#wWho").focus({ preventScroll: true });
   });
 
-  form.addEventListener("submit", ev => {
+  form.addEventListener("submit", async ev => {
     ev.preventDefault();
     const text = $("#wText").value.trim();
     if (!text) { toast(W.noWish); $("#wText").focus(); return; }
 
+    const who = $("#wWho").value.trim() || "Аноним";
+    const btn = $("#wishForm .send");
+    btn.disabled = true;
+    const ok = await sendToBot({ type: "wish", name: who, text, website: $("#wWebsite").value });
+    btn.disabled = false;
+
     const list = read("wishes") || [];
-    list.unshift({ who: $("#wWho").value.trim() || "Аноним", text, at: new Date().toISOString() });
+    list.unshift({ who, text, at: new Date().toISOString() });
     save("wishes", list.slice(0, 40));
 
     $("#wText").value = "";
     form.hidden = true;
     renderWishes();
-    toast(W.wishOk);
+    toast(ok || !tgOn() ? W.wishOk : W.sendFail);
   });
 }
 
