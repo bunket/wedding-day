@@ -17,7 +17,7 @@ const CONFIG = {
     hour: 18,
     minute: 0,
     tzOffset: 5,          // Мāңғыстау — UTC+5
-    until: true,          // true → «06:00-ға дейін»
+    until: false,          // true → «06:00-ға дейін»
   },
 
   /* ─── Той иелері ───
