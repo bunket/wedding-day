@@ -14,7 +14,7 @@ const CONFIG = {
     year: 2027,
     monthIndex: 0,        // 0 = қаңтар
     day: 3,
-    hour: 6,
+    hour: 18,
     minute: 0,
     tzOffset: 5,          // Мāңғыстау — UTC+5
     until: true,          // true → «06:00-ға дейін»
@@ -23,7 +23,7 @@ const CONFIG = {
   /* ─── Той иелері ───
      Әр жол — бір жұп: «ата - ана». Бос орын қалдырсаңыз көрсетілмейді. */
   hosts: [
-    { left: "Илес", right: "Оразгуль" },
+    { left: "(Илес)", right: "Оразгуль" },
     { left: "Жақсымұрат", right: "Алина" },
   ],
   hostsNote: "",
@@ -72,7 +72,7 @@ const EVENT_ISO = (() => {
 const EVENT_DATE = new Date(EVENT_ISO);
 
 const timeText = () =>
-  E.until ? `Сағат ${pad(E.hour)}:${pad(E.minute)}-ға дейін`
+  E.until ? `Сағат ${pad(E.hour)}:${pad(E.minute)}`
           : `Сағат ${pad(E.hour)}:${pad(E.minute)}`;
 
 /* ═════════ Мәтіндерді орнату ═════════ */
