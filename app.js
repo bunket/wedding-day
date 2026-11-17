@@ -72,8 +72,8 @@ const EVENT_ISO = (() => {
 const EVENT_DATE = new Date(EVENT_ISO);
 
 const timeText = () =>
-  E.until ? `Сағат ${pad(E.hour)}:${pad(E.minute)}`
-          : `Сағат ${pad(E.hour)}:${pad(E.minute)}`;
+  E.until ? `18:00-ға дейін`
+          : `18:00-ға дейін`;
 
 /* ═════════ Мәтіндерді орнату ═════════ */
 function paint () {
