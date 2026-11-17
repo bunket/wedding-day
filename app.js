@@ -40,7 +40,7 @@ const CONFIG = {
      ЕСКЕРТУ: токен осы файлда ашық жатыр — беттің кодын ашқан адам
      көреді. Жасыру үшін прокси сервер керек.
      chats: [1-адам, 2-адам] chat_id-лері. Бос болса — мәтін көшіріледі. */
-  telegram: { token: "9013685554:AAGGdUn-TVWKg8PIEGyxSATiDGUVdih92Ik", chats: ["6715191374", "6715191374"] },
+  telegram: { token: "9013685554:AAGGdUn-TVWKg8PIEGyxSATiDGUVdih92Ik", chats: ["6715191374", "6231927569"] },
 
   /* ─── Сөздік ─── */
   words: {
